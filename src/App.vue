@@ -1,15 +1,23 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <Calendar title="Calendar" :date="date" :reminders="reminders"/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { computed } from '@vue/reactivity';
+import {useStore} from "vuex";
+import Calendar from './components/Calendar.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Calendar
+  },
+  setup() {
+    const store = useStore();
+    return {
+      date: computed(() => JSON.parse(JSON.stringify(store.state.date))),
+      reminders: computed(() => JSON.parse(JSON.stringify(store.state.reminders))),
+    }
   }
 }
 </script>
