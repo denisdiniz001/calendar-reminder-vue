@@ -1,7 +1,7 @@
 <template>
   <div class="c-calendar">
     <h1>{{ title }}</h1>
-    <Month :days="daysToGenerateMonth" :month="month"/>
+    <Month :days="daysToGenerateMonth" :monthNumber="monthNumber"/>
   </div>
 </template>
 
@@ -19,14 +19,14 @@ export default {
   },
   mounted() {
       console.log(this.date)
-      console.log(this.getDaysInMonth(this.date.month, this.date.year))
+      //console.log(this.daysToGenerateMonth)
   },
   computed: {
 
       daysToGenerateMonth() {
           return this.getDaysInMonth(this.date.month, this.date.year);
       },
-      month() {
+      monthNumber() {
           return this.date.month;
       }
   },
@@ -41,11 +41,12 @@ export default {
             days.push(dateObj);
             date.setDate(date.getDate() + 1);
         }
-        let prepend = (7 - (days[0].dayOfWeek + 1));
+        let prepend = days[0].dayOfWeek;
         if(prepend) days = new Array(prepend).concat(days);
 
-        let append = (35 - days.length);
-        if(append) days = days.concat(append);
+        let append = (42 - days.length);
+        if(append) days = days.concat(new Array(append));
+        console.log(days)
         return days;
     },
     createDateObject(nDate, year, month) {

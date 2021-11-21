@@ -1,6 +1,6 @@
 <template>
   <div class="c-calendar__month">
-    <h3 class="c-calendar__month--title">{{monthNames[month]}}</h3>
+    <h3 class="c-calendar__month--title">{{monthName}}</h3>
     <div class="c-calendar__day c-calendar__day--title" v-for="(wd, index) in weekDays" :key="index">
         <span>{{wd}}</span>
     </div>
@@ -19,18 +19,19 @@ export default {
     name: 'Month',
     props: {
         days: Object,
-        month: Number
+        monthNumber: Number
     },
     data() {
         return {
             // weekDays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']\
             weekDays: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-            monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
         }
     },
-    mounted() {
-        console.log(this.days)
-    },
+    computed: {
+        monthName() {
+            return new Date(new Date().setMonth(this.monthNumber)).toLocaleString('default', { month: 'long' });
+        }
+    }
 }
 </script>
 
@@ -42,6 +43,7 @@ export default {
             flex-wrap: wrap;
             justify-content: center;
             &--title {
+                text-transform: capitalize;
                 width: 100%;
             }
         }
