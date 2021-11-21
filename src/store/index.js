@@ -2,11 +2,17 @@ import { createStore } from "vuex";
 
 const state = {
     date: {
-        year: 2021,
-        month: 11
+        year: new Date().getFullYear(),
+        month: new Date().getMonth()
     },
     reminders: {
-        '20211128': [
+        '20211015': [
+            {
+                'id': 1,
+                'name': 'nome 1'
+            },
+        ],
+        '20211028': [
             {
                 'id': 1,
                 'name': 'nome 1'
