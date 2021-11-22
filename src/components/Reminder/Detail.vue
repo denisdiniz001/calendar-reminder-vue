@@ -87,8 +87,8 @@ export default {
         getReminder() {
             const store = useStore();
             let rem = store.state.reminders[this.id];
-            rem = rem[this.reminderPos];
-            return rem ? JSON.parse(JSON.stringify(rem)) : this.getReminderModel;
+            rem = this.reminderPos >= 0 ? rem[this.reminderPos] : this.getReminderModel;
+            return JSON.parse(JSON.stringify(rem));
         },
         generateByNumber(value) {
             let array=[];

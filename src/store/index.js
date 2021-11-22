@@ -44,6 +44,15 @@ const state = {
                 'city': 'Rio de janeiro',
                 'color': 'green'
             },
+        ],
+        '20211125': [
+            {
+                'id': 1,
+                'description': 'Natal',
+                'time': '1200',
+                'city': 'Belém',
+                'color': 'red'
+            }
         ]
     }
 }
@@ -78,6 +87,26 @@ const mutations = {
 
         state.reminders[parentID] = reminderObj;
         console.log(state.reminders)
+    },
+    previousMonth(state) {
+        console.log('previous', state)
+        let month = state.date.month - 1;
+        state.date.month = month;
+
+        if(month >=0) return;
+        let year = state.date.year - 1;
+        state.date.year = year;
+        state.date.month = 12;
+    },
+    nextMonth(state) {
+        console.log('next', state)
+        let month = state.date.month + 1;
+        state.date.month = month;
+
+        if(month <=11) return;
+        let year = state.date.year + 1;
+        state.date.year = year;
+        state.date.month = 0;
     }
 }
 

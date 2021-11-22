@@ -1,6 +1,10 @@
 <template>
   <div class="c-calendar__month">
-    <h3 class="c-calendar__month--title">{{monthName}}</h3>
+      <div class="c-calendar__controls">
+          <div v-on:click="previousMonth" class="c-calendar__controls--icon"><i class="fas fa-arrow-left"></i></div>
+          <h3 class="c-calendar__month--title">{{monthName}} - {{yearNumber}}</h3>
+          <div v-on:click="nextMonth" class="c-calendar__controls--icon"><i class="fas fa-arrow-right"></i></div>
+      </div>
 
     <!-- header -->
     <div class="c-calendar__day c-calendar__header" v-for="(wd, index) in weekDays" :key="index">
@@ -16,8 +20,7 @@ import DayCard from './Day/Card.vue';
 export default {
     name: 'Month',
     props: {
-        days: Object,
-        monthNumber: Number
+        days: Object
     },
     components: {
         DayCard
@@ -29,8 +32,22 @@ export default {
         }
     },
     computed: {
+        monthNumber() {
+            return this.$store.state.date.month;
+        },
+        yearNumber() {
+            return this.$store.state.date.year;
+        },
         monthName() {
             return new Date(new Date().setMonth(this.monthNumber)).toLocaleString('default', { month: 'long' });
+        }
+    },
+    methods: {
+        previousMonth() {
+            this.$store.commit('previousMonth');
+        },
+        nextMonth() {
+            this.$store.commit('nextMonth');
         }
     }
 }
@@ -46,6 +63,16 @@ export default {
             &--title {
                 text-transform: capitalize;
                 width: 100%;
+            }
+        }
+        &__controls {
+            align-items: center;
+            display: flex;
+            flex-basis: 100%;
+            margin: 1rem 3rem;
+            &--icon {
+                cursor: pointer;
+                font-size: 2rem;
             }
         }
         &__header {

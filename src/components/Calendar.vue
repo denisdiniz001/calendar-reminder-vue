@@ -1,13 +1,11 @@
 <template>
   <div class="c-calendar">
     <h1>{{ title }}</h1>
-    <Month :days="generatedMonths" :monthNumber="monthNumber"/>
+    <Month :days="generatedMonths"/>
   </div>
 </template>
 
 <script>
-import { computed } from '@vue/reactivity';
-import {useStore} from "vuex";
 import Month from './Month.vue';
 export default {
   name: 'Calendar',
@@ -17,22 +15,23 @@ export default {
   components: {
       Month
   },
-  setup() {
-    const store = useStore();
-    console.log(store)
-    return {
-      date: computed(() => JSON.parse(JSON.stringify(store.state.date))),
-      reminders: computed(() => JSON.parse(JSON.stringify(store.getters.orderedReminders))),
-      generatedMonths: null,
-      monthNumber: null
+  computed: {
+    month() {
+      return this.$store.state.date.month;
+    },
+    year() {
+      return this.$store.state.date.year;
+    },
+    reminders() {
+      return JSON.parse(JSON.stringify(this.$store.getters.orderedReminders));
+    },
+    generatedMonths() {
+      return this.getDaysInMonth(this.$store.state.date.month, this.$store.state.date.year);
     }
-  },
-  beforeMount() {
-      this.generatedMonths = this.getDaysInMonth(this.date.month, this.date.year);
-      this.monthNumber = this.date.month;
   },
   methods: {
     getDaysInMonth(month, year) {
+      console.log(month, year)
         var date = new Date(year, month, 1);
         var days = [];
         while (date.getMonth() === month) {
