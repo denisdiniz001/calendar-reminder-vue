@@ -1,34 +1,34 @@
 <template>
   <div class="c-calendar">
     <h1>{{ title }}</h1>
-    <Month :days="daysToGenerateMonth" :monthNumber="monthNumber"/>
+    <Month :days="generatedMonths" :monthNumber="monthNumber"/>
   </div>
 </template>
 
 <script>
+import { computed } from '@vue/reactivity';
+import {useStore} from "vuex";
 import Month from './Month.vue';
 export default {
   name: 'Calendar',
   props: {
-    title: String,
-    date: Object,
-    reminders: Object
+    title: String
   },
   components: {
       Month
   },
-  mounted() {
-      console.log(this.date)
-      //console.log(this.daysToGenerateMonth)
+  setup() {
+    const store = useStore();
+    return {
+      date: computed(() => JSON.parse(JSON.stringify(store.state.date))),
+      reminders: computed(() => JSON.parse(JSON.stringify(store.state.reminders))),
+      generatedMonths: null,
+      monthNumber: null
+    }
   },
-  computed: {
-
-      daysToGenerateMonth() {
-          return this.getDaysInMonth(this.date.month, this.date.year);
-      },
-      monthNumber() {
-          return this.date.month;
-      }
+  beforeMount() {
+      this.generatedMonths = this.getDaysInMonth(this.date.month, this.date.year);
+      this.monthNumber = this.date.month;
   },
   methods: {
     getDaysInMonth(month, year) {
@@ -50,7 +50,7 @@ export default {
         return days;
     },
     createDateObject(nDate, year, month) {
-        let dayOfMonth = nDate.getDate();
+        let dayOfMonth = String(nDate.getDate()).padStart(2, '0');
         let dateObj = {
             dayOfWeek: nDate.getDay(),
             dayOfMonth,

@@ -1,24 +1,13 @@
 <template>
-  <Calendar title="Calendar" :date="date" :reminders="reminders"/>
+  <div id="nav">
+    <router-link to="/">Home</router-link>
+  </div>
+  <router-view />
 </template>
 
 <script>
-import { computed } from '@vue/reactivity';
-import {useStore} from "vuex";
-import Calendar from './components/Calendar.vue'
-
 export default {
   name: 'App',
-  components: {
-    Calendar
-  },
-  setup() {
-    const store = useStore();
-    return {
-      date: computed(() => JSON.parse(JSON.stringify(store.state.date))),
-      reminders: computed(() => JSON.parse(JSON.stringify(store.state.reminders))),
-    }
-  }
 }
 </script>
 

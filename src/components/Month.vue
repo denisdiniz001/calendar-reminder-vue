@@ -1,25 +1,26 @@
 <template>
   <div class="c-calendar__month">
     <h3 class="c-calendar__month--title">{{monthName}}</h3>
-    <div class="c-calendar__day c-calendar__day--title" v-for="(wd, index) in weekDays" :key="index">
+
+    <!-- header -->
+    <div class="c-calendar__day c-calendar__header" v-for="(wd, index) in weekDays" :key="index">
         <span>{{wd}}</span>
     </div>
-    <div class="c-calendar__day" v-for="(day, index) in days" :key="index">
-        <div v-if="day && day.dayOfMonth">
-            {{day.dayOfMonth}}
-            <div v-if="day.reminders && day.reminders.length">Tem coisa</div>
-        </div>
-        <div v-else>-</div>
-    </div>
+    <!-- days -->
+    <DayCard v-for="(day, index) in days" :key="index" :day="day"/>
   </div>
 </template>
 
 <script>
+import DayCard from './Day/Card.vue';
 export default {
     name: 'Month',
     props: {
         days: Object,
         monthNumber: Number
+    },
+    components: {
+        DayCard
     },
     data() {
         return {
@@ -47,19 +48,16 @@ export default {
                 width: 100%;
             }
         }
-        &__day {
+        &__header {
             align-items: center;
+            background-color: #2f74b5;
             border: 1px solid #666;
             box-sizing: border-box;
+            color: #ffffff;
             display: flex;
             flex-basis: 14%;
+            height: 50px;
             justify-content: center;
-            height: 100px;
-            &--title {
-                background-color: #2f74b5;
-                color: #ffffff;
-                height: 50px;
-            }
         }
     }
 </style>
