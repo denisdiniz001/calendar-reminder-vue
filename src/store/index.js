@@ -6,6 +6,15 @@ const state = {
         month: new Date().getMonth()
     },
     reminders: {
+        '20211005': [
+            {
+                'id': 1,
+                'description': 'Event',
+                'time': '1200',
+                'city': 'New York',
+                'color': 'green'
+            }
+        ],
         '20211015': [
             {
                 'id': 1,

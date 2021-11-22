@@ -25,6 +25,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    @import './../../mixins/mixins.scss';
     .c-card {
         &__reminder {
             box-sizing: border-box;
@@ -39,30 +40,7 @@ export default {
                 text-decoration: none;
             }
 
-            &--red {
-                background-color: #b31d23;
-            }
-            &--blue {
-                background-color: #0000b3;
-            }
-            &--yellow {
-                background-color: yellow;
-                .c-card__reminder--link {
-                    color: #000 !important;
-                }
-            }
-            &--green {
-                background-color: #227438;
-            }
-            &--navy {
-                background-color: navy;
-            }
-            &--cyan {
-                background-color: cyan;
-            }
-            &--orange {
-                background-color: orange;
-            }
+            @include bg-colors;
         }
     }
 </style>

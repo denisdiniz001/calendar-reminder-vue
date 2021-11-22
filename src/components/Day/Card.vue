@@ -2,7 +2,8 @@
     <div class="c-calendar__day">
         <router-link v-if="day && day.dayOfMonth" :to="{ name: 'Day', params: { id: day.id } }" class="c-calendar__day c-calendar__day--link">
             <b>{{day.dayOfMonth}}</b>
-            <div v-if="day.reminders && day.reminders.length" class="c-calendar__reminder">{{day.reminders.length}}</div>
+            <div v-if="day.reminders && day.reminders.length > 1" class="c-calendar__reminder">{{day.reminders.length}}</div>
+            <div v-else-if="day.reminders && day.reminders.length" class="c-calendar__reminder" :class="`c-calendar__reminder--${day.reminders[0].color} c-calendar__reminder--only-one`">{{day.reminders[0].description}}</div>
         </router-link>
         <div v-else>-</div>
     </div>
@@ -21,6 +22,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    @import './../../mixins/mixins.scss';
     .c-calendar {
         &__day {
             border: 1px solid #666;
@@ -53,6 +55,16 @@ export default {
             right: 0;
             bottom: 0;
             width: 1.5rem;
+            &--only-one {
+                box-sizing: border-box;
+                display: block;
+                overflow: hidden;
+                padding: 0 10px;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                width: 100%;
+            }
+            @include bg-colors;
         }
     }
 </style>
