@@ -19,9 +19,10 @@ export default {
   },
   setup() {
     const store = useStore();
+    console.log(store)
     return {
       date: computed(() => JSON.parse(JSON.stringify(store.state.date))),
-      reminders: computed(() => JSON.parse(JSON.stringify(store.state.reminders))),
+      reminders: computed(() => JSON.parse(JSON.stringify(store.getters.orderedReminders))),
       generatedMonths: null,
       monthNumber: null
     }

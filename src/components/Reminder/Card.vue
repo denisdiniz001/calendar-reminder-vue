@@ -40,7 +40,7 @@ export default {
             }
 
             &--red {
-                background-color: #9d0000;
+                background-color: #b31d23;
             }
             &--blue {
                 background-color: #0000b3;
@@ -50,6 +50,18 @@ export default {
                 .c-card__reminder--link {
                     color: #000 !important;
                 }
+            }
+            &--green {
+                background-color: #227438;
+            }
+            &--navy {
+                background-color: navy;
+            }
+            &--cyan {
+                background-color: cyan;
+            }
+            &--orange {
+                background-color: orange;
             }
         }
     }

@@ -35,7 +35,7 @@ const state = {
                 'description': 'Ipsum Lorium',
                 'time': '1830',
                 'city': 'Sao Jose',
-                'color': 'yeallow'
+                'color': 'yellow'
             },
             {
                 'id': 2,
@@ -48,6 +48,41 @@ const state = {
     }
 }
 
+const getters = {
+    orderedReminders: state => {
+        let keys = Object.keys(state.reminders);
+        keys.forEach(key => {
+            let remElements = state.reminders[key];
+            remElements.sort(function (a, b) {
+              return a.time - b.time;
+            });
+        });
+        return state.reminders;
+    }
+}
+
+const mutations = {
+    addReminder(state, {parentID, pos, reminder}) {
+        console.log(parentID);
+        console.log(pos);
+        console.log(reminder);
+        let reminderObj = state.reminders[parentID];
+        if(!reminderObj) reminderObj = [];
+        if(pos != -1) {
+            reminderObj[pos] = reminder;
+        }else {
+            let length = reminderObj.length;
+            reminder.id = length + 1;
+            reminderObj[length] = reminder;
+        }
+
+        state.reminders[parentID] = reminderObj;
+        console.log(state.reminders)
+    }
+}
+
 export default createStore({
-    state
+    state,
+    getters,
+    mutations
 });

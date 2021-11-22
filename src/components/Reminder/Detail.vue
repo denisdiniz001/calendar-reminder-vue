@@ -33,6 +33,10 @@
                 </option>
             </select>
         </div>
+        <div c-detail__reminder-actions>
+            <button v-on:click="addReminder">Save</button>
+            <button v-on:click="goToPreviousPage">Return</button>
+        </div>
     </div>
 </template>
 
@@ -60,25 +64,44 @@ export default {
             minutes: null
         }
     },
-    mounted() {
+    beforeMount() {
+        this.hours = this.generateByNumber(24);
+        this.minutes = this.generateByNumber(60);
+
         this.reminder = this.getReminder();
         if(!this.reminder.time) return;
         this.hour = String(this.reminder.time).slice(0,2);
         this.minute = String(this.reminder.time).slice(2,4);
-        this.hours = this.generateByNumber(24);
-        this.minutes = this.generateByNumber(60);
+    },
+    computed: {
+        getReminderModel() {
+            return {
+                'description': '',
+                'time': '0000',
+                'city': '',
+                'color': ''
+            }
+        }
     },
     methods: {
         getReminder() {
             const store = useStore();
             let rem = store.state.reminders[this.id];
             rem = rem[this.reminderPos];
-            return rem ? JSON.parse(JSON.stringify(rem)) : [];
+            return rem ? JSON.parse(JSON.stringify(rem)) : this.getReminderModel;
         },
         generateByNumber(value) {
             let array=[];
             for(let i=0; i<value; i++) array.push(String(i).padStart(2, '0'));
             return array;
+        },
+        addReminder() {
+            this.reminder.time = `${this.hour}${this.minute}`
+            this.$store.commit('addReminder', {parentID: this.id, pos: this.reminderPos, reminder: this.reminder});
+            this.goToPreviousPage();
+        },
+        goToPreviousPage () {
+            this.$router.go(-1);
         }
     },
 }

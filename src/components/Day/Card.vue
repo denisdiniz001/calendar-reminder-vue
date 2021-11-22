@@ -1,8 +1,8 @@
 <template>
     <div class="c-calendar__day">
         <router-link v-if="day && day.dayOfMonth" :to="{ name: 'Day', params: { id: day.id } }" class="c-calendar__day c-calendar__day--link">
-            {{day.dayOfMonth}}
-            <div v-if="day.reminders && day.reminders.length" class="c-calendar__reminder">Tem coisa</div>
+            <b>{{day.dayOfMonth}}</b>
+            <div v-if="day.reminders && day.reminders.length" class="c-calendar__reminder">{{day.reminders.length}}</div>
         </router-link>
         <div v-else>-</div>
     </div>
@@ -40,8 +40,19 @@ export default {
             }
         }
         &__reminder {
+            align-items: center;
+            background-color: #b31d23;
+            border-radius: 0.5rem;
+            color: #FFF;
+            display: flex;
+            font-size: 0.75rem;
+            font-weight: bold;
+            height: 1rem;
+            justify-content: center;
             position: absolute;
+            right: 0;
             bottom: 0;
+            width: 1.5rem;
         }
     }
 </style>
